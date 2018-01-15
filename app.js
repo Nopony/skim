@@ -21,19 +21,38 @@ app.use(session({
 
 app.use('/', express.static('public'))
 
-const participants = require('./participants.json')
+const allParticipants = require('./participants.json')
+let participants = allParticipants.invited
+let staleInvitations = allParticipants.stale
 const treatments = require('./treatments.json')
-const texts = require('./texts.json')
+const texts = require('./texts.json').map((text,idx) => {
+  text.idx = idx
+  text.questions = text.questions.map((question, idx) => {
+    question.qidx = idx
+    question.answers = question.answers.map((answer, idx) => {
+      answer.aidx = idx
+      return answer
+    })
+    return question
+  })
+  return text
+})
 
 app.get('/signup', function(req, res, next) {
-  if(!treatments[md5(req.query.participant_id)]){
-    res.send('err') //TODO: Handle wrong pid
-    return console.log('No treatment for ' + req.query.participant_id)
+  if(participants.indexOf(req.query.participant_id) === -1) {
+    if(staleInvitations.indexOf(req.query.participant_id) !== -1) {
+      return res.render('error', {error_message: "This participant code has expired. Please show this message to an experimenter"})
+    }
+    if(allParticipants.priviledged.indexOf(req.query.participant_id) === -1) {
+      return res.render('error', {error_message: "We cannot recognize this participant number. Try typing it gain. If this problem persists, please show this message to an experimenter"})
+    }
+    console.log('Priviledged user ' + req.query.participant_id + ' granted access')
+    
   }
   res.data = {}
   req.session.participant_id = req.query.participant_id
   res.data.participant_id = req.session.participant_id
-  req.session.treatment = treatments[treatments[md5(req.session.participant_id)]]
+  req.session.treatment = treatments[treatments[req.session.participant_id]]
   req.session.round = 0
   req.session.stage = 0
   req.session.times = []
@@ -41,9 +60,30 @@ app.get('/signup', function(req, res, next) {
   res.render('signup', res.data)
 })
 
+
+app.use('*', function(req, res, next) {
+  if(!req.session.participant_id) {
+    return res.redirect('/')
+  }
+  else next();
+})
+
 app.get('/questions', function(req, res, next) {
   if(req.session.round >= req.session.treatment.length) {
     return res.redirect('/done')
+  }
+
+  if(req.session.round >= 0) {
+    fs.appendFileSync('results/' + req.session.treatment, texts[req.session.treatment[req.session.round]].questions.map( (q, qIdx) => {
+        let validIdx = -1
+        q.answers.forEach((ans, idx) => {
+          if (ans.valid) validIdx = idx
+        })
+        if(req.query['question' + qIdx + 'answer'] == validIdx) {
+          return 1
+        }
+        else return 0
+    }) + ' ')
   }
 
 
@@ -69,17 +109,18 @@ app.get('/text', function(req, res, next) {
 
 app.get('/round_end', function(req, res, next) {
 
-
-  //TODO: log answers
   res.data = {}
   res.data.participant_id = req.session.participant_id
   res.data.text = texts[req.session.treatment[req.session.round]]
   res.data.rounds_left = req.session.treatment.length - req.session.round - 1
 
+
+
   if(req.session.stage % 2 == 1) {
     req.session.stage += 1
     req.session.times.push((new Date().getTime()))
     req.session.round += 1
+
   }
 
   res.render('answers', res.data);
@@ -90,10 +131,15 @@ app.get('/round_end', function(req, res, next) {
 app.get('/done', function(req, res, next) {
   res.data = {}
   res.data.participant_id = req.session.participant_id
+  fs.appendFileSync('results/' + req.session.treatment, req.session.times + '\n')
+
   res.render('done', res.data)
+
+  staleInvitations.push(participants.splice(participants.indexOf(req.session.participant_id),1)[0])
+  fs.writeFileSync('./participants.json', JSON.stringify({invited: participants, stale: staleInvitations, priviledged: allParticipants.priviledged}, null, 4))
+
+  req.session.destroy()
+
 })
-
-
-
 
 app.listen(3000)

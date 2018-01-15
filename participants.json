@@ -1,1 +1,10 @@
-["CoolGuy12","XXxSlasherxXX"]
+{
+    "invited": [],
+    "stale": [
+        "CoolGuy12",
+        "XXxSlasherxXX"
+    ],
+    "priviledged": [
+        "AlexTheAssumptionPersona"
+    ]
+}

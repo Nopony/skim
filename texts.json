@@ -13,7 +13,8 @@
           "content": "Text 1 question 1 answer 2 content"
         },
         {
-          "content": "Text 1 question 1 answer 3 content"
+          "content": "Text 1 question 1 answer 3 content",
+          "valid": true
         },
         {
           "content": "Text 1 question 1 answer 4 content"
@@ -23,7 +24,8 @@
         "content": "Text 1 question 2 content",
         "idx": 1,
         "answers": [{
-          "content": "Text 1 question 2 answer 1 content"
+          "content": "Text 1 question 2 answer 1 content",
+          "valid": true
         },
         {
           "content": "Text 1 question 2 answer 2 content"
@@ -51,7 +53,8 @@
           "content": "Text 2 question 1 answer 2 content"
         },
         {
-          "content": "Text 2 question 1 answer 3 content"
+          "content": "Text 2 question 1 answer 3 content",
+          "valid": true
         },
         {
           "content": "Text 2 question 1 answer 4 content"
@@ -67,10 +70,51 @@
           "content": "Text 2 question 2 answer 2 content"
         },
         {
-          "content": "Text 2 question 2 answer 3 content"
+          "content": "Text 2 question 2 answer 3 content",
+          "valid": true
         },
         {
           "content": "Text 2 question 2 answer 4 content"
+        }]
+      }
+    ]
+  },
+    {
+    "content": "Text 3 content",
+    "class": "medium",
+    "questions": [
+      {
+        "content": "Text 3 question 1 content",
+        "idx": 0,
+        "answers": [{
+          "content": "Text 3 question 1 answer 1 content"
+        },
+        {
+          "content": "Text 3 question 1 answer 2 content",
+          "valid": true
+        },
+        {
+          "content": "Text 3 question 1 answer 3 content"
+        },
+        {
+          "content": "Text 3 question 1 answer 4 content"
+        }]
+      },
+      {
+        "content": "Text 3 question 2 content",
+        "idx": 1,
+        "answers": [{
+          "content": "Text 3 question 2 answer 1 content"
+        },
+        {
+          "content": "Text 3 question 2 answer 2 content"
+        },
+        {
+          "content": "Text 3 question 2 answer 3 content"
+        },
+        {
+          "content": "Text 3 question 2 answer 4 content",
+          "valid": true
         }]
       }
     ]

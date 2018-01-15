@@ -1,7 +1,8 @@
 {
-  "1": [0, 1],
-  "2": [1, 0],
+  "1": [2, 1, 0],
+  "2": [1, 0, 2],
 
-  "c34c7cc18a77bdedb2a90c76dfc5d61a": 1,
-  "64e86f0742c22b3f5fb3f8c3d6bc0b95": 2
+  "CoolGuy12": 1,
+  "XXxSlasherxXX": 2,
+  "AlexTheAssumptionPersona": 2
 }
