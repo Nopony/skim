@@ -27,6 +27,7 @@ let staleInvitations = allParticipants.stale
 const treatments = require('./treatments.json')
 const texts = require('./texts.json').map((text,idx) => {
   text.idx = idx
+  text.content = fs.readFileSync('./texts/' + (idx + 1)).toString().trim().split('\n').map(text => {return {paragraph: text}})
   text.questions = text.questions.map((question, idx) => {
     question.qidx = idx
     question.answers = question.answers.map((answer, idx) => {
@@ -44,7 +45,7 @@ app.get('/signup', function(req, res, next) {
       return res.render('error', {error_message: "This participant code has expired. Please show this message to an experimenter"})
     }
     if(allParticipants.priviledged.indexOf(req.query.participant_id) === -1) {
-      return res.render('error', {error_message: "We cannot recognize this participant number. Try typing it gain. If this problem persists, please show this message to an experimenter"})
+      return res.render('error', {error_message: "We cannot recognize this participant number. Try typing it again. If this problem persists, please show this message to an experimenter"})
     }
     console.log('Priviledged user ' + req.query.participant_id + ' granted access')
     
@@ -56,6 +57,7 @@ app.get('/signup', function(req, res, next) {
   req.session.round = 0
   req.session.stage = 0
   req.session.times = []
+  req.session.resultString = req.session.participant_id.substr(0,2) + ',' + (new Date()).toString() + ','
 
   res.render('signup', res.data)
 })
@@ -74,7 +76,7 @@ app.get('/questions', function(req, res, next) {
   }
 
   if(req.session.round >= 0) {
-    fs.appendFileSync('results/' + req.session.treatment, texts[req.session.treatment[req.session.round]].questions.map( (q, qIdx) => {
+    req.session.resultString += req.session.treatment, texts[req.session.treatment[req.session.round]].questions.map( (q, qIdx) => {
         let validIdx = -1
         q.answers.forEach((ans, idx) => {
           if (ans.valid) validIdx = idx
@@ -83,7 +85,7 @@ app.get('/questions', function(req, res, next) {
           return 1
         }
         else return 0
-    }) + ' ')
+    }) + ' '
   }
 
 
@@ -131,7 +133,7 @@ app.get('/round_end', function(req, res, next) {
 app.get('/done', function(req, res, next) {
   res.data = {}
   res.data.participant_id = req.session.participant_id
-  fs.appendFileSync('results/' + req.session.treatment, req.session.times + '\n')
+  fs.appendFileSync('results/' + req.session.treatment, req.session.resultString + req.session.times + '\n')
 
   res.render('done', res.data)
 

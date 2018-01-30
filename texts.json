@@ -1,6 +1,6 @@
 [
   {
-    "content": "Text 1 content",
+    "content": "text1.txt",
     "class": "big",
     "questions": [
       {
@@ -84,36 +84,37 @@
     "class": "medium",
     "questions": [
       {
-        "content": "Text 3 question 1 content",
+        "content": "In the article, someone decided to invest £40,000 into opening a pub. What was the person’s name?",
         "idx": 0,
         "answers": [{
-          "content": "Text 3 question 1 answer 1 content"
+          "content": "Dec Munro"
         },
         {
-          "content": "Text 3 question 1 answer 2 content",
+          "content": "Barry Ferns",
           "valid": true
         },
         {
-          "content": "Text 3 question 1 answer 3 content"
+          "content": "Sarah Pearce"
         },
         {
-          "content": "Text 3 question 1 answer 4 content"
+          "content": "Rachel Corino"
         }]
       },
+
       {
-        "content": "Text 3 question 2 content",
+        "content": "In what year did the first “Angel Comedy Club night” take place?",
         "idx": 1,
         "answers": [{
-          "content": "Text 3 question 2 answer 1 content"
+          "content": "1980"
         },
         {
-          "content": "Text 3 question 2 answer 2 content"
+          "content": "2000"
         },
         {
-          "content": "Text 3 question 2 answer 3 content"
+          "content": "2010"
         },
         {
-          "content": "Text 3 question 2 answer 4 content",
+          "content": "2015",
           "valid": true
         }]
       }

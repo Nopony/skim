@@ -39,7 +39,9 @@
 
     <div class="container">
       <h3>Hello, participant {{participant_id}}</h3>
-      <p class="text-{{text.class}}">{{text.content}}</p>
+      {{#text.content}}
+          <p class="text-{{text.class}}">{{paragraph}}</p>
+      {{/text.content}}
       <a class="button" href="/round_end?participant_id={{participant_id}}&done=true">Done</a>
     </div>
 
