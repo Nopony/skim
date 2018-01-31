@@ -1,122 +1,52 @@
 [
   {
-    "content": "text1.txt",
-    "class": "big",
     "questions": [
       {
         "idx": 0,
-        "content": "Text 1 question 1 content",
-        "answers": [{
-          "content": "Text 1 question 1 answer 1 content"
-        },
-        {
-          "content": "Text 1 question 1 answer 2 content"
-        },
-        {
-          "content": "Text 1 question 1 answer 3 content",
-          "valid": true
-        },
-        {
-          "content": "Text 1 question 1 answer 4 content"
-        }]
+        "content": "Report of which executive agency includes information about the number of deaths from influenza?"
       },
       {
-        "content": "Text 1 question 2 content",
-        "idx": 1,
-        "answers": [{
-          "content": "Text 1 question 2 answer 1 content",
-          "valid": true
-        },
-        {
-          "content": "Text 1 question 2 answer 2 content"
-        },
-        {
-          "content": "Text 1 question 3 answer 3 content"
-        },
-        {
-          "content": "Text 1 question 4 answer 4 content"
-        }]
+        "content": "According to text, which strain of flu is less severe?",
+        "idx": 1
+      },
+      {
+        "content": "What form of flu medicine should be invested in, according to Professor John Oxford?",
+        "idx": 1
       }
     ]
   },
   {
-    "content": "Text 2 content",
-    "class": "small",
     "questions": [
       {
-        "content": "Text 2 question 1 content",
-        "idx": 0,
-        "answers": [{
-          "content": "Text 2 question 1 answer 1 content"
-        },
-        {
-          "content": "Text 2 question 1 answer 2 content"
-        },
-        {
-          "content": "Text 2 question 1 answer 3 content",
-          "valid": true
-        },
-        {
-          "content": "Text 2 question 1 answer 4 content"
-        }]
+        "content": "Where was Danya Sherman studying when her friend drugged her?",
+        "idx": 0
       },
       {
-        "content": "Text 2 question 2 content",
-        "idx": 1,
-        "answers": [{
-          "content": "Text 2 question 2 answer 1 content"
-        },
-        {
-          "content": "Text 2 question 2 answer 2 content"
-        },
-        {
-          "content": "Text 2 question 2 answer 3 content",
-          "valid": true
-        },
-        {
-          "content": "Text 2 question 2 answer 4 content"
-        }]
+        "content": "What is the meaning of KnoNap’s name?",
+        "idx": 1
+      },
+     {
+        "content": "Who did Sharman receive business help from?",
+        "idx": 1
       }
     ]
+    
   },
     {
-    "content": "Text 3 content",
-    "class": "medium",
     "questions": [
       {
-        "content": "In the article, someone decided to invest £40,000 into opening a pub. What was the person’s name?",
-        "idx": 0,
-        "answers": [{
-          "content": "Dec Munro"
-        },
-        {
-          "content": "Barry Ferns",
-          "valid": true
-        },
-        {
-          "content": "Sarah Pearce"
-        },
-        {
-          "content": "Rachel Corino"
-        }]
+        "content": "In the article, someone decided to invest £40,000 into opening a pub. What was that person’s name?",
+        "idx": 0
       },
 
       {
         "content": "In what year did the first “Angel Comedy Club night” take place?",
-        "idx": 1,
-        "answers": [{
-          "content": "1980"
-        },
-        {
-          "content": "2000"
-        },
-        {
-          "content": "2010"
-        },
-        {
-          "content": "2015",
-          "valid": true
-        }]
+        "idx": 1
+      },
+      {
+        "content": "With help of which TV show did Jeff Garlin become famous?",
+        "idx": 2,
+        "openQuestion": true
       }
     ]
   }

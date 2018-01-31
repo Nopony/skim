@@ -30,10 +30,10 @@ const texts = require('./texts.json').map((text,idx) => {
   text.content = fs.readFileSync('./texts/' + (idx + 1)).toString().trim().split('\n').map(text => {return {paragraph: text}})
   text.questions = text.questions.map((question, idx) => {
     question.qidx = idx
-    question.answers = question.answers.map((answer, idx) => {
-      answer.aidx = idx
-      return answer
-    })
+    // question.answers = question.answers.map((answer, idx) => {
+    //   answer.aidx = idx
+    //   return answer
+    // })
     return question
   })
   return text
@@ -71,23 +71,16 @@ app.use('*', function(req, res, next) {
 })
 
 app.get('/questions', function(req, res, next) {
+
+
+  if(req.query.answers) {
+    console.log(req.query.answers)
+    req.session.resultString +=req.query.answers.map(ans => ans.split(',').join('<comma>')) + ','
+  }
+
   if(req.session.round >= req.session.treatment.length) {
     return res.redirect('/done')
   }
-
-  if(req.session.round >= 0) {
-    req.session.resultString += req.session.treatment, texts[req.session.treatment[req.session.round]].questions.map( (q, qIdx) => {
-        let validIdx = -1
-        q.answers.forEach((ans, idx) => {
-          if (ans.valid) validIdx = idx
-        })
-        if(req.query['question' + qIdx + 'answer'] == validIdx) {
-          return 1
-        }
-        else return 0
-    }) + ' '
-  }
-
 
   res.data = {}
   res.data.participant_id = req.session.participant_id
@@ -99,11 +92,13 @@ app.get('/questions', function(req, res, next) {
 app.get('/text', function(req, res, next) {
   if(req.session.stage % 2 == 0) {
     req.session.stage += 1
+    req.session.resultString += treatments.sizes[treatments[req.session.participant_id]][req.session.round] + ','
     req.session.times.push((new Date().getTime()))
   }
   res.data = {}
   res.data.participant_id = req.session.participant_id
   res.data.text = texts[req.session.treatment[req.session.round]]
+  res.data.text.class = treatments.sizes[treatments[req.session.participant_id]][req.session.round]
 
   res.render('text', res.data)
 })

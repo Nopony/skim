@@ -41,16 +41,15 @@
       {{#text.questions}}
           <li>
           <span>{{content}}</span>
-          <ol>
+          <br><input type="text" placeholder="Answer" name="answers[]"></input>
+<!--           <ol>
           {{#answers}}
               <li><input type="radio" name="question{{qidx}}answer" value="{{aidx}}">{{content}}</input></li>
           {{/answers}}
-          </ol>
+          </ol> -->
           </li>
       {{/text.questions}}
       </ol>
-
-
       <p> 
       {{#rounds_left}}
       You will be asked to answer
