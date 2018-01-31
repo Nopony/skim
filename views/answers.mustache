@@ -35,33 +35,21 @@
 
     <div class="container">
       <h3>Hello, participant {{participant_id}}</h3>
-      <p>Please answer the following questions. Take all the time you need. </p>
-      <form action="/questions">
-      <ol>
-      {{#text.questions}}
-          <li>
-          <span>{{content}}</span>
-          <br><input type="text" placeholder="Answer" name="answers[]"></input>
-<!--           <ol>
-          {{#answers}}
-              <li><input type="radio" name="question{{qidx}}answer" value="{{aidx}}">{{content}}</input></li>
-          {{/answers}}
-          </ol> -->
-          </li>
-      {{/text.questions}}
-      </ol>
       <p> 
+      Your answers were saved.
       {{#rounds_left}}
       You will be asked to answer
         {{rounds_left}}
       more sets of questions.
       {{/rounds_left}}
       {{^rounds_left}}
-        This was the last set of questions. Please submit your results with the button below.
+        This was the last set of questions. Your data was logged succesfully. The authors of the study are grateful for your time.
       {{/rounds_left}} </p>
 
-      <input type="submit"><div class="button"></div></input>
-      </form>
+      {{#rounds_left}}
+      <a href="/questions">Next</a>
+      {{/rounds_left}}
+      
 
 
     </div><!-- /.container -->

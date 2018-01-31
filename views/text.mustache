@@ -39,10 +39,26 @@
 
     <div class="container">
       <h3>Hello, participant {{participant_id}}</h3>
+
+
+      <div class="questions-container">
+      <form action="/round_end">
+      <ol>
+      {{#text.questions}}
+          <li>
+          <span>{{content}}</span>
+          <br>
+          <input type="text" name="answers[]">
+          </li>
+      {{/text.questions}}
+      </ol>
+      <input type="submit">
+    </form>
+      </div>
       {{#text.content}}
           <p class="text-{{text.class}}">{{paragraph}}</p>
       {{/text.content}}
-      <a class="button" href="/round_end?participant_id={{participant_id}}&done=true">Done</a>
+      <!-- <a class="button" href="/round_end?participant_id={{participant_id}}&done=true">Done</a> -->
     </div>
 
 

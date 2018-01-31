@@ -73,15 +73,6 @@ app.use('*', function(req, res, next) {
 app.get('/questions', function(req, res, next) {
 
 
-  if(req.query.answers) {
-    console.log(req.query.answers)
-    req.session.resultString +=req.query.answers.map(ans => ans.split(',').join('<comma>')) + ','
-  }
-
-  if(req.session.round >= req.session.treatment.length) {
-    return res.redirect('/done')
-  }
-
   res.data = {}
   res.data.participant_id = req.session.participant_id
   res.data.text = texts[req.session.treatment[req.session.round]]
@@ -106,37 +97,34 @@ app.get('/text', function(req, res, next) {
 
 app.get('/round_end', function(req, res, next) {
 
-  res.data = {}
-  res.data.participant_id = req.session.participant_id
-  res.data.text = texts[req.session.treatment[req.session.round]]
-  res.data.rounds_left = req.session.treatment.length - req.session.round - 1
+    if(req.query.answers) {
+    console.log(req.query.answers)
+    req.session.resultString += req.query.answers.map(ans => ans.split(',').join('<comma>')) + ','
+  }
 
-
-
-  if(req.session.stage % 2 == 1) {
+    if(req.session.stage % 2 == 1) {
     req.session.stage += 1
     req.session.times.push((new Date().getTime()))
     req.session.round += 1
 
   }
 
-  res.render('answers', res.data);
-
-
-})
-
-app.get('/done', function(req, res, next) {
   res.data = {}
   res.data.participant_id = req.session.participant_id
-  fs.appendFileSync('results/' + req.session.treatment, req.session.resultString + req.session.times + '\n')
+  res.data.text = texts[req.session.treatment[req.session.round]]
+  res.data.rounds_left = req.session.treatment.length - req.session.round
 
-  res.render('done', res.data)
+  res.render('answers', res.data);
 
-  staleInvitations.push(participants.splice(participants.indexOf(req.session.participant_id),1)[0])
-  fs.writeFileSync('./participants.json', JSON.stringify({invited: participants, stale: staleInvitations, priviledged: allParticipants.priviledged}, null, 4))
+  if(req.session.round >= req.session.treatment.length) {
+    fs.appendFileSync('results/' + req.session.treatment, req.session.resultString + req.session.times + '\n')
+    if(participants.indexOf(req.session.participant_id) != -1)
+        staleInvitations.push(participants.splice(participants.indexOf(req.session.participant_id),1)[0])
+    fs.writeFileSync('./participants.json', JSON.stringify({invited: participants, stale: staleInvitations, priviledged: allParticipants.priviledged}, null, 4))
 
-  req.session.destroy()
-
+    req.session.destroy()
+  }
 })
+
 
 app.listen(3000)
